@@ -50,12 +50,13 @@ async def get_age(message:types.Message, state: FSMContext):
     await message.answer(f"Your age is {message.text}")
     await state.update_data(age = int(message.text))
     saved_data = await state.get_data()
-    await message.answer(saved_data)
     name = saved_data["name"]
     last_name = saved_data["last_name"]
     age = saved_data["age"]
     await message.answer(f"Your full name is {name} {last_name} and your age is {age}")
-    await state.clear()
+    await state.reset_data()
+    cleared_data = await state.get_data()
+    await message.answer(cleared_data)
 
 
 executor.start_polling(dp)
